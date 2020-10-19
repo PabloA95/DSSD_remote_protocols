@@ -10,4 +10,7 @@ Rails.application.routes.draw do
   get "/protocols", to: "protocols#index"
   get "/protocols/:id", to:"protocols#show"
   post "/protocols", to:"protocols#create"
+
+  get "/status/:id", to:"instances#status"
+  post "/execute", to:"instances#execute"
 end
