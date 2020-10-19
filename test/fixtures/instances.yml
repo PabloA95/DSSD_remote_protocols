@@ -1,0 +1,17 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  fecha_inicio: 2020-10-19 15:31:12
+  fecha_fin: 2020-10-19 15:31:12
+  estado: MyString
+  puntaje: 1
+  proyecto_id: 1
+  protocol: one
+
+two:
+  fecha_inicio: 2020-10-19 15:31:12
+  fecha_fin: 2020-10-19 15:31:12
+  estado: MyString
+  puntaje: 1
+  proyecto_id: 1
+  protocol: two

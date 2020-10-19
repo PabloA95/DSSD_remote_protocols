@@ -6,4 +6,8 @@ Rails.application.routes.draw do
   post "/users", to: "users#create"
   get "/users", to: "users#index"
   get "auto_login", to: "users#auto_login"
+
+  get "/protocols", to: "protocols#index"
+  get "/protocols/:id", to:"protocols#show"
+  post "/protocols", to:"protocols#create"
 end
