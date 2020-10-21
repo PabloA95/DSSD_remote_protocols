@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  before_action :authorized, except: [:login]
+  before_action :authorized, except: [:login, :create]
   #, only: [:auto_login]
   before_action :set_user, only: [:show]
 
@@ -20,8 +20,8 @@ class UsersController < ApplicationController
   def create
     @user = User.create(user_params)
     if @user.valid?
-      token = encode_token({user_id: @user.id})
-      render json: {user: @user, token: token}
+      @now=DateTime.now
+      render json: {user: @user}, :except =>  [:password_digest]
     else
       render json: @user
       # render json: {error: "Invalid username or password"}
@@ -34,8 +34,9 @@ class UsersController < ApplicationController
     @user = User.find_by(name: params[:name])
 
     if @user && @user.authenticate(params[:password])
-      token = encode_token({user_id: @user.id})
-      render json: {user: @user, token: token}
+      @now=DateTime.now
+      token = encode_token({user_id: @user.id, name:@user.name, iat: @now.to_time.to_i,exp:(@now+120.minutes).to_time.to_i })
+      render json: {token: token}
     else
       render json: {error: "Invalid username or password"}
     end

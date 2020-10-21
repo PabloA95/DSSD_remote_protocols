@@ -5,7 +5,7 @@ class InstancesController < ApplicationController
   def execute
     @instance = Instance.new(instance_params)
     if Protocol.exists?(params[:protocol])
-      @instance.set_result (params[:protocol])
+      @instance.set_result params[:protocol],(params[:duracion]==nil)?1:params[:duracion]
       if @instance.save
         render json: @instance, :except =>  [:created_at,:updated_at,:estado,:puntaje,:fecha_fin]
       else
