@@ -35,7 +35,7 @@ class UsersController < ApplicationController
 
     if @user && @user.authenticate(params[:password])
       @now=DateTime.now
-      token = encode_token({user_id: @user.id, name:@user.name, iat: @now.to_time.to_i,exp:(@now+120.minutes).to_time.to_i })
+      token = encode_token({user_id: @user.id, name:@user.name, iat: @now.to_time.to_i,exp:(@now+5.minutes).to_time.to_i })
       render json: {token: token}
     else
       render json: {error: "Invalid username or password"}
@@ -52,23 +52,5 @@ class UsersController < ApplicationController
   def user_params
     params.permit(:name, :password)
   end
-
-
-
-  # # GET /applicants/1
-  # def show
-  #   render json: @applicant
-  # end
-
-  # # POST /applicants
-  # def create
-  #   @Users = Users.new(users_params)
-  #
-  #   if @Users.save
-  #     render json: @users, status: :created, location: @users
-  #   else
-  #     render json: @users.errors, status: :unprocessable_entity
-  #   end
-  # end
 
 end

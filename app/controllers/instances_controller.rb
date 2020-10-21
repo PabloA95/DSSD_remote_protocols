@@ -5,7 +5,8 @@ class InstancesController < ApplicationController
   def execute
     @instance = Instance.new(instance_params)
     if Protocol.exists?(params[:protocol])
-      @instance.set_result params[:protocol],(params[:duracion]==nil)?1:params[:duracion]
+      duracion=Protocol.find(params[:protocol]).to_s
+      @instance.set_result params[:protocol],(params[:duracion]==nil)?duracion:params[:duracion]
       if @instance.save
         render json: @instance, :except =>  [:created_at,:updated_at,:estado,:puntaje,:fecha_fin]
       else
@@ -29,7 +30,11 @@ class InstancesController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_instance
-      @instance = Instance.find(params[:id])
+      if Instance.exists?(params[:id])
+        @instance = Instance.find(params[:id])
+      else
+        render json: { error: 'No se ejecuto nada con ese id', codigo: 707 }
+      end
     end
 
     # Only allow a trusted parameter "white list" through.
