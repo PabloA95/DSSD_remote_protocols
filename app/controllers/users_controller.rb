@@ -12,7 +12,7 @@ class UsersController < ApplicationController
   # GET /users
   def index
     @users = User.all
-    render json: @users
+    render json: @users, :except =>  [:password_digest]
   end
 
   # REGISTER
@@ -35,7 +35,7 @@ class UsersController < ApplicationController
 
     if @user && @user.authenticate(params[:password])
       @now=DateTime.now
-      token = encode_token({user_id: @user.id, name:@user.name, iat: @now.to_time.to_i,exp:(@now+5.minutes).to_time.to_i })
+      token = encode_token({user_id: @user.id, name:@user.name, iat: @now.to_time.to_i,exp:(@now+15.minutes).to_time.to_i })
       render json: {token: token}
     else
       render json: {error: "Invalid username or password"}

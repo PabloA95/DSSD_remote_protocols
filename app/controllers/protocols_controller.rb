@@ -26,7 +26,11 @@ class ProtocolsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_protocol
-      @protocol = Protocol.find(params[:id])
+      if Protocol.exists?(params[:id])
+        @protocol = Protocol.find(params[:id])
+      else
+        render json: { error: 'No se encontro un protocolo con ese id', codigo: 808 }
+      end
     end
 
     # Only allow a trusted parameter "white list" through.

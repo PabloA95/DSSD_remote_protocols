@@ -1,6 +1,8 @@
 class Instance < ApplicationRecord
   belongs_to :protocol
 
+  validates :proyecto_id, presence: true
+
   def set_result(protocol, duracion)
     now=DateTime.now()
     self.fecha_inicio=now
